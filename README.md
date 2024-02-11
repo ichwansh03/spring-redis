@@ -12,3 +12,10 @@
 * `keys *`: mengambil semua keys yg ada di db
 * `mset <key> "value" <key> "value"`: menambahkan data lebih dari satu
 * `mget <key> <key>`: mengambil data lebih dari satu
+* `flushdb`: menghapus key pada db saat ini
+* `flushall`: menghapus key pada semua db
+* `setex <key> <seconds> "value"`: mengatur waktu expire key
+* `redis-cli -h localhost -p 6379 --pipe < nama-file.txt`: input file dalam jumlah besar
+* `multi`: memulai transactional pada db
+* `exec`: eksekusi keys dan lakukan commit
+* `discard`: rollback keys
