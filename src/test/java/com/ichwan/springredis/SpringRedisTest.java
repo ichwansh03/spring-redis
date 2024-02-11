@@ -4,10 +4,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResults;
+import org.springframework.data.geo.Point;
+import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.domain.geo.Metrics;
 
 import java.util.Set;
 import static org.hamcrest.MatcherAssert.*;
@@ -60,5 +63,26 @@ public class SpringRedisTest {
         Set<String> person = operations.members("person");
         Assertions.assertEquals(2, person.size());
         assertThat(person, hasItems("Ichwan", "Sholihin"));
+    }
+
+    /**
+     * mendapatkan jarak antar dua point dan mencari key berdasarkan point
+     * docs in here: <a href="https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/GeoOperations.html">...</a>
+     */
+    @Test
+    void geoRedisTest() {
+        GeoOperations<String, String> operations = redisTemplate.opsForGeo();
+        operations.add("branch",new Point(105.191658,-5.266823), "Home");
+        operations.add("branch",new Point(105.190548,-5.266466), "Toko");
+
+        Distance distance = operations.distance("branch", "Home", "Toko", Metrics.METERS);
+        Assertions.assertEquals(129.2528,distance.getValue());
+
+        GeoResults<RedisGeoCommands.GeoLocation<String>> searched = operations.search("branch", new Circle(
+                new Point(105.191658, -5.266823),
+                new Distance(5, Metrics.KILOMETERS)
+        ));
+
+        Assertions.assertEquals(2, searched.getContent().size());
     }
 }
