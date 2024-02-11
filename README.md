@@ -19,3 +19,12 @@
 * `multi`: memulai transactional pada db
 * `exec`: eksekusi keys dan lakukan commit
 * `discard`: rollback keys
+* `client list`: untuk mendapatkan list client
+* `redis-clit -h <ip-address> -p 6379`: mengubah localhost menjadi ip local, ubah dulu ip loopback pada file config
+* `auth <username> <password>`: autentikasi menggunakan username dan password yg sudah didaftarkan pada file config 
+```markdown
+user default on +@connection
+user ichwan on +@all ~* >secret123
+```
+
+[reference](https://docs.google.com/presentation/d/1kDwmRom2R7JioqkUh6mT1ohjy0t1kRQQHR1VwWgT-b0/edit?usp=sharing)
