@@ -10,10 +10,12 @@ import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
 import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.domain.geo.Metrics;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.hasItems;
