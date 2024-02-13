@@ -13,6 +13,7 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.domain.geo.Metrics;
+import org.springframework.data.redis.support.collections.RedisList;
 
 import java.util.List;
 import java.util.Map;
@@ -129,5 +130,21 @@ public class SpringRedisTest {
 
         assertThat(list, hasSize(2));
         assertThat(list, hasItems(true));
+    }
+
+    /**
+     * kemampuan redis memiliki collection sama seperti di java
+     */
+    @Test
+    void listRedis() {
+        List<String> persons = RedisList.create("names", redisTemplate);
+
+        persons.addAll(List.of("Ichwan","Sholihin"));
+
+        //untuk set, gunakan opsForSet().members("key") dan map gunakan opsForHash().entries("key")
+        List<String> names = redisTemplate.opsForList().range("names", 0, -1);
+
+        assertThat(persons, hasItems("Ichwan","Sholihin"));
+        assertThat(names, hasItems("Ichwan","Sholihin"));
     }
 }
