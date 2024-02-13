@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.keyvalue.annotation.KeySpace;
 import org.springframework.data.redis.core.TimeToLive;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 @Data
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Builder
 //sama dengan products:id
 @KeySpace(value = "products")
-public class Product {
+public class Product implements Serializable {
 
     @Id
     private String id;
